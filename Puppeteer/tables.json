@@ -1,0 +1,12 @@
+{
+	"queue":[
+		{
+	 		"name": "id",
+	 		"type": "id"
+	 	}, {
+	 		"name": "arguments",
+	 		"type": "json",
+	 		"comment": "json encoded data, args etc"
+	 	}
+	]
+}
