@@ -17,6 +17,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 	public function queueJob($name, $args=array()){
 
 		try{
+
 			$widget=GetWidget($name);
 			if(!($widget instanceof PuppeteerScriptWidget)){
 				throw new \Exception('Widget is not a PuppeteerScript: '.$name);
@@ -24,7 +25,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 
 
 		}catch(\Exception $e){
-			throw new \Exception('PuppeteerScript does not exist: '.$name);
+			throw new \Exception('PuppeteerScript does not exist: '.$name.' '.$e->getMessage());
 		}
 
 
