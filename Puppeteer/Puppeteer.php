@@ -57,7 +57,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 		}
 
 		$counter=0;
-		while((!empty($list)&&$counter<5){
+		while((!empty($list))&&$counter<5){
 
 			$item=array_shift($list);
 			$this->getDatabase()->deleteQueue($item->id);
