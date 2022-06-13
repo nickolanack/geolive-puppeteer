@@ -52,7 +52,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 
 		$list=$this->getDatabase()->getQueueList();
 
-		if(empty($list){
+		if(empty($list)){
 			return;
 		}
 
