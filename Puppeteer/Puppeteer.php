@@ -13,4 +13,32 @@ class Puppeteer extends \core\extensions\Plugin implements
 	protected $description = 'Manages Puppeteer Tests and Scripts via API calls';
 
 
+
+	public function queueJob($name, $args=array()){
+
+		try{
+			$widget=GetWidget($name);
+			if(!($widget instanceof PuppeteerScriptWidget)){
+				throw new \Exception('Not a PuppeteerScript: '.$name)
+			}
+
+
+		}catch(\Exception $e){
+
+			throw new \Exception('Not a PuppeteerScript: '.$name);
+
+		}
+
+
+		$id=$this->getDatabase()->createQueue(array(
+			'name'=>$name,
+			'arguments'=>json_encode((object)$args)
+		));
+
+		return $id;
+
+
+	}
+
+
 }
