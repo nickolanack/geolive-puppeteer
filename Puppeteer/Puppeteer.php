@@ -24,7 +24,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 			throw new \Exception('PuppeteerScript does not exist: '.$name.' '.$e->getMessage());
 		}
 
-		if(!($widget instanceof PuppeteerScriptWidget)){
+		if(!($widget instanceof \PuppeteerScriptWidget)){
 			throw new \Exception('Widget is not a PuppeteerScript: '.$name);
 		}
 
@@ -35,6 +35,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 		));
 
 		return $id;
+
 
 
 	}
