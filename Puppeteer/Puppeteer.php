@@ -40,8 +40,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 		Throttle('onTriggerProccessPuppeteerJobs', array('job'=>$id), array('interval' => 30), 2);
 
 
-		return $id;
-
+		return array('values'=>$this->getDatabase()->getQueueList());
 
 
 	}
@@ -51,7 +50,20 @@ class Puppeteer extends \core\extensions\Plugin implements
 	protected function onTriggerProccessPuppeteerJobs($args){
 
 
+		$list=$this->getDatabase()->getQueueList();
 
+		if(empty($list){
+			return;
+		}
+
+
+		$item=array_shift($list);
+		$this->getDatabase()->deleteQueue($item->id);
+
+
+		if(!empty($list)){
+			//Throttle('onTriggerProccessPuppeteerJobs', array('job'=>$id), array('interval' => 30), 2);
+		}
 
 
 
