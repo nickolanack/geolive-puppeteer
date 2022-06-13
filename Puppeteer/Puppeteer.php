@@ -37,7 +37,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 		));
 
 
-		Throttle('onTriggerProccessPuppeteerJobs', $params, array('interval' => 30), 60);
+		Throttle('onTriggerProccessPuppeteerJobs', array('job'=>$id), array('interval' => 30), 2);
 
 
 		return $id;
