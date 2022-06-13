@@ -1,0 +1,22 @@
+[
+	{
+		"type":"text",
+		"name":"widgetTitle",
+		"label":"Label",
+		"placeholder":"add a label or comment for this widget",
+		"default":""
+	},
+	{
+		"type":"text",
+		"name":"target",
+		"label":"Target Id",
+		"placeholder":"add a target name",
+		"default":""
+	},
+	{
+        "type": "input.script",
+        "name": "puppeteerScript",
+        "default": "",
+        "label": "puppeteerScript"
+    }
+]
