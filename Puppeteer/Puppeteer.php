@@ -19,15 +19,12 @@ class Puppeteer extends \core\extensions\Plugin implements
 		try{
 			$widget=GetWidget($name);
 			if(!($widget instanceof PuppeteerScriptWidget)){
-				throw new \Exception('Not a PuppeteerScript: '.$name);
-				
+				throw new \Exception('Widget is not a PuppeteerScript: '.$name);
 			}
 
 
 		}catch(\Exception $e){
-
-			throw new \Exception('Not a PuppeteerScript: '.$name);
-
+			throw new \Exception('PuppeteerScript does not exist: '.$name);
 		}
 
 
