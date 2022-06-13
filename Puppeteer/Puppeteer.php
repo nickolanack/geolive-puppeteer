@@ -57,7 +57,14 @@ class Puppeteer extends \core\extensions\Plugin implements
 		}
 
 		$counter=0;
-		while((!empty($list))&&$counter<5){
+		$time=microtime(true);
+
+
+		$maxItems=10;
+		$maxProcessTime=30;
+
+		while((!empty($list))&&$counter<$maxItems&&microtime(true)-$time<$maxProcessTime){
+
 
 			$item=array_shift($list);
 			$this->getDatabase()->deleteQueue($item->id);
