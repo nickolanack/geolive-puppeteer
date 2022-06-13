@@ -5,10 +5,12 @@ namespace Plugin;
 
 class Puppeteer extends \core\extensions\Plugin implements
 	\core\extensions\widget\WidgetProvider,
-	\core\DatabaseProvider{
+	\core\DatabaseProvider,
+	\core\EventListener{
 
 	use \core\extensions\widget\WidgetProviderTrait;
 	use \core\DatabaseProviderTrait;
+	use \core\EventListenerTrait;
 
 	protected $description = 'Manages Puppeteer Tests and Scripts via API calls';
 
@@ -34,7 +36,22 @@ class Puppeteer extends \core\extensions\Plugin implements
 			'arguments'=>json_encode((object)$args)
 		));
 
+
+		Throttle('onTriggerProccessPuppeteerJobs', $params, array('interval' => 30), 60);
+
+
 		return $id;
+
+
+
+	}
+
+
+
+	protected function onTriggerProccessPuppeteerJobs($args){
+
+
+
 
 
 
