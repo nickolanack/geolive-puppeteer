@@ -56,9 +56,13 @@ class Puppeteer extends \core\extensions\Plugin implements
 			return;
 		}
 
+		$counter=0;
+		while((!empty($list)&&$counter<5){
 
-		$item=array_shift($list);
-		$this->getDatabase()->deleteQueue($item->id);
+			$item=array_shift($list);
+			$this->getDatabase()->deleteQueue($item->id);
+			$counter++;
+		}
 
 
 		if(!empty($list)){
