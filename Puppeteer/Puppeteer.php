@@ -50,9 +50,9 @@ class Puppeteer extends \core\extensions\Plugin implements
 	protected function onTriggerProccessPuppeteerJobs($args){
 
 
-		$list=$this->getDatabase()->getQueueList();
+		$records=$this->getDatabase()->getQueueList();
 
-		if(empty($list)){
+		if(empty($records)){
 			return;
 		}
 
@@ -63,22 +63,22 @@ class Puppeteer extends \core\extensions\Plugin implements
 		$maxItems=10;
 		$maxProcessTime=30;
 
-		while((!empty($list))&&$counter<$maxItems&&microtime(true)-$time<$maxProcessTime){
+		while((!empty($records))&&$counter<$maxItems&&microtime(true)-$time<$maxProcessTime){
 
 
-			$item=array_shift($list);
-			$this->getDatabase()->deleteQueue($item->id);
+			$row=array_shift($records);
+			$this->getDatabase()->deleteQueue($row->id);
 			$counter++;
 
 
-			$widget=GetWidget($name);
-			$widget->runScript(json_decode($item->arguments));
+			$widget=GetWidget($row->name);
+			$widget->runScript(json_decode($row->arguments));
 
 
 		}
 
 
-		if(!empty($list)){
+		if(!empty($records)){
 			//Throttle('onTriggerProccessPuppeteerJobs', array('job'=>$id), array('interval' => 30), 2);
 		}
 
