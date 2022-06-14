@@ -12,7 +12,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 		$dir=getcwd();
 		chdir(__DIR__);
 
-		echo shell_exec('node test.js '.escapeshellarg(json_encode(array("url"=>$args->url)));
+		echo shell_exec('node test.js '.escapeshellarg(json_encode(array("url"=>$args->url))));
 
 		chdir($dir);
 	}
