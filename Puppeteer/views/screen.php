@@ -12,5 +12,9 @@ if (count($segments) !== 2) {
 
 $name=array_shift($segments);
 $id=array_shift($segments);
+$id=str_replace('.png', '', $id);
+$file= $this->getImage($name, $id);
 
-echo $this->getImage($name, $id);
+
+header('Content-Type: image/png;');
+readfile($file);
