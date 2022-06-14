@@ -37,7 +37,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 
 		$hash=$widget->getHash($args);
 		if($widget->exists($hash)){
-			return array('id'=>$hash);
+			return array('id'=>$hash); //expose hash as id
 		}
 
 
@@ -56,6 +56,33 @@ class Puppeteer extends \core\extensions\Plugin implements
 			'values'=>$this->getDatabase()->getQueueList()
 		);
 
+
+	}
+
+
+	public function getImage($name, $id){
+
+
+		try{
+
+			$widget=GetWidget($name);
+			
+		}catch(\Exception $e){
+			throw new \Exception('PuppeteerScript does not exist: '.$name.' '.$e->getMessage());
+		}
+
+		if(!($widget instanceof \PuppeteerScriptWidget)){
+			throw new \Exception('Widget is not a PuppeteerScript: '.$name);
+		}
+
+
+		//use id as hash
+
+		if($widget->exists($id)){
+			return $widget->getImagePath($id);
+		}
+
+		return false;
 
 	}
 
