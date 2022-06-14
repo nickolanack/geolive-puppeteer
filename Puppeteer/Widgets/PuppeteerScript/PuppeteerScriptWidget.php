@@ -9,7 +9,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 	public function runScript($args){
 
 
-		$hash=md5($args->url);
+		$hash=$this->getHash($args->url);
 
 
 		$outdir=GetPath("{front}/../puppeteer/{domain}/");
@@ -35,7 +35,23 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 
 		chdir($dir);
 
-		return $out;
+		return $hash;
+	}
+
+
+	public function getHash($args){
+
+		if(is_object($args)&&isset($args->url)){
+			$args=$args->url;
+		}
+
+		if(is_string($args)){
+			return md5($args);
+		}
+
+
+		throw new \Exception('Expected string, or object: {"url":<string>}');
+
 	}
 	
 }

@@ -18,6 +18,8 @@ class Puppeteer extends \core\extensions\Plugin implements
 
 	public function queueJob($name, $args=array()){
 
+
+
 		try{
 
 			$widget=GetWidget($name);
@@ -40,7 +42,10 @@ class Puppeteer extends \core\extensions\Plugin implements
 		Throttle('onTriggerProccessPuppeteerJobs', array('job'=>$id), array('interval' => 5), 2);
 
 
-		return array('values'=>$this->getDatabase()->getQueueList());
+		return array(
+			'job'=>$id,
+			'values'=>$this->getDatabase()->getQueueList()
+		);
 
 
 	}
