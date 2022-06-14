@@ -11,7 +11,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 
 		$outdir=GetPath("{front}/../puppeteer/{domain}/");
 		if(!file_exists($outdir)){
-			if(!mkdir($outdir, 0700, true){
+			if(!mkdir($outdir, 0700, true)){
 				throw new \Exception('Failed to create: '.$outdir);
 			}
 		}
