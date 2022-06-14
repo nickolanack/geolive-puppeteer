@@ -54,6 +54,10 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 
 	public function getHash($args){
 
+		if(is_array($args)){
+			$args=(object) $args;
+		}
+
 		if(is_object($args)&&isset($args->url)){
 			$args=$args->url;
 		}
