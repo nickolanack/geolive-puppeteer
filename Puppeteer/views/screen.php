@@ -16,5 +16,7 @@ $id=str_replace('.png', '', $id);
 $file= $this->getImage($name, $id);
 
 
+
 header('Content-Type: image/png;');
 readfile($file);
+exit();
