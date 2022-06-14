@@ -9,11 +9,19 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 	public function runScript($args){
 
 
+		$hash=md5($args->url);
+
+
 		$outdir=GetPath("{front}/../puppeteer/{domain}/");
 		if(!file_exists($outdir)){
 			if(!mkdir($outdir, 0700, true)){
 				throw new \Exception('Failed to create: '.$outdir);
 			}
+		}
+
+		$out=$outdir.'/'.$hash.'.png';
+		if(file_exists($out){
+			return $out;
 		}
 
 
@@ -22,10 +30,12 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 
 		echo shell_exec('node test.js '.escapeshellarg(json_encode(array(
 			"url"=>$args->url,
-			"out"=>$outdir.'/'.md5($args->url).'.png'
+			"out"=>$out
 		))));
 
 		chdir($dir);
+
+		return $out;
 	}
 	
 }
