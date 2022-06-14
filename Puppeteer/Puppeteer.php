@@ -69,6 +69,12 @@ class Puppeteer extends \core\extensions\Plugin implements
 			$item=array_shift($list);
 			$this->getDatabase()->deleteQueue($item->id);
 			$counter++;
+
+
+			$widget=GetWidget($name);
+			$widget->runScript(json_decode($item->arguments));
+
+
 		}
 
 
