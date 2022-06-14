@@ -33,6 +33,14 @@ class Puppeteer extends \core\extensions\Plugin implements
 		}
 
 
+
+		$hash=$widget->getHash($args);
+		if($widget->exists($hash)){
+			return array('id'=>$hash);
+		}
+
+
+
 		$id=$this->getDatabase()->createQueue(array(
 			'name'=>$name,
 			'arguments'=>json_encode((object)$args)

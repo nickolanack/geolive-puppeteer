@@ -9,8 +9,35 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 	public function runScript($args){
 
 
-		$hash=$this->getHash($args->url);
+		$hash=$this->getHash($args);
+		if($this->exists($hash)){
+			return $hash;
+		}
 
+
+	
+
+		$dir=getcwd();
+		chdir(__DIR__);
+
+		echo shell_exec('node test.js '.escapeshellarg(json_encode(array(
+			"url"=>$args->url,
+			"out"=>$this->getImagePath($hash)
+		))));
+
+		chdir($dir);
+
+		return $hash;
+	}
+
+
+	public function exists($hash){
+
+		return file_exists($this->getImagePath($hash));
+
+	}
+
+	public function getImagePath($hash){
 
 		$outdir=GetPath("{front}/../puppeteer/{domain}/");
 		if(!file_exists($outdir)){
@@ -20,22 +47,8 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 		}
 
 		$out=$outdir.'/'.$hash.'.png';
-		if(file_exists($out)){
-			return $out;
-		}
+		return $out;
 
-
-		$dir=getcwd();
-		chdir(__DIR__);
-
-		echo shell_exec('node test.js '.escapeshellarg(json_encode(array(
-			"url"=>$args->url,
-			"out"=>$out
-		))));
-
-		chdir($dir);
-
-		return $hash;
 	}
 
 
