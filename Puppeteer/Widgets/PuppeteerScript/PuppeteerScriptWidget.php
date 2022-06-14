@@ -37,7 +37,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 			return true;
 		}
 
-		if (time() - filectime($file) > 3600) {
+		if (time() - filectime($file) > 2*60) {
 			$lastFile = dirname($file) . '/_' . basename($file);
 			if (file_exists($lastFile)) {
 				unlink($lastFile);
