@@ -6,7 +6,8 @@ namespace Plugin;
 class Puppeteer extends \core\extensions\Plugin implements
 	\core\extensions\widget\WidgetProvider,
 	\core\DatabaseProvider,
-	\core\EventListener{
+	\core\EventListener,
+	\core\ViewController{
 
 	use \core\extensions\widget\WidgetProviderTrait;
 	use \core\DatabaseProviderTrait;
