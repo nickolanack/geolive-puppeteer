@@ -37,7 +37,10 @@ class Puppeteer extends \core\extensions\Plugin implements
 
 		$hash=$widget->getHash($args);
 		if($widget->exists($hash)){
-			return array('id'=>$hash); //expose hash as id
+			return array(
+				'id'=>$hash
+				'url'=>HTMLDocument()->website().'/screen/'.$name.'/'.$hash
+			); //expose hash as id
 		}
 
 
@@ -51,11 +54,16 @@ class Puppeteer extends \core\extensions\Plugin implements
 		Throttle('onTriggerProccessPuppeteerJobs', array('job'=>$id), array('interval' => 5), 2);
 
 
-		return array(
+		$return = array(
 			'job'=>$id,
 			'values'=>$this->getDatabase()->getQueueList()
 		);
 
+		if($widget->exists('_'.$hash)){
+			$return['url']=HTMLDocument()->website().'/screen/'.$name.'/'.$hash;
+		}
+
+		return $return;
 
 	}
 
@@ -81,6 +89,12 @@ class Puppeteer extends \core\extensions\Plugin implements
 		if($widget->exists($id)){
 			return $widget->getImagePath($id);
 		}
+
+		if($widget->exists('_'.$id)){
+			$file =  $widget->getImagePath($id);
+			return dirname($file).'/_'.basename($file);
+		}
+
 
 		return false;
 

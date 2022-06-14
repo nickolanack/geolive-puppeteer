@@ -1,28 +1,23 @@
-<?php 
+<?php
 
-
-class PuppeteerScriptWidget extends \core\extensions\Widget{
+class PuppeteerScriptWidget extends \core\extensions\Widget {
 
 	use \core\extensions\plugin\PluginMemberTrait;
 	protected $description = "Create a script for Puppeteer";
 
-	public function runScript($args){
+	public function runScript($args) {
 
-
-		$hash=$this->getHash($args);
-		if($this->exists($hash)){
+		$hash = $this->getHash($args);
+		if ($this->exists($hash)) {
 			return $hash;
 		}
 
-
-	
-
-		$dir=getcwd();
+		$dir = getcwd();
 		chdir(__DIR__);
 
-		echo shell_exec('node test.js '.escapeshellarg(json_encode(array(
-			"url"=>$args->url,
-			"out"=>$this->getImagePath($hash)
+		echo shell_exec('node test.js ' . escapeshellarg(json_encode(array(
+			"url" => $args->url,
+			"out" => $this->getImagePath($hash),
 		))));
 
 		chdir($dir);
@@ -30,45 +25,61 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 		return $hash;
 	}
 
+	public function exists($hash) {
 
-	public function exists($hash){
+		$file = $this->getImagePath($hash);
 
-		return file_exists($this->getImagePath($hash));
+		if (!file_exists($file)) {
+			return false;
+		}
+
+		if (strpos($hash, '_') === 0) {
+			return true;
+		}
+
+		if (time() - filectime($file) > 3600) {
+			$lastFile = dirname($file) . '/_' . basename($file);
+			if (file_exists($lastFile)) {
+				unlink($lastFile);
+			}
+			rename($file, $lastFile);
+			return false;
+		}
+
+		return true;
 
 	}
 
-	public function getImagePath($hash){
+	public function getImagePath($hash) {
 
-		$outdir=GetPath("{front}/../puppeteer/{domain}/");
-		if(!file_exists($outdir)){
-			if(!mkdir($outdir, 0700, true)){
-				throw new \Exception('Failed to create: '.$outdir);
+		$outdir = GetPath("{front}/../puppeteer/{domain}/");
+		if (!file_exists($outdir)) {
+			if (!mkdir($outdir, 0700, true)) {
+				throw new \Exception('Failed to create: ' . $outdir);
 			}
 		}
 
-		$out=$outdir.'/'.$hash.'.png';
+		$out = $outdir . '/' . $hash . '.png';
 		return $out;
 
 	}
 
+	public function getHash($args) {
 
-	public function getHash($args){
-
-		if(is_array($args)){
-			$args=(object) $args;
+		if (is_array($args)) {
+			$args = (object) $args;
 		}
 
-		if(is_object($args)&&isset($args->url)){
-			$args=$args->url;
+		if (is_object($args) && isset($args->url)) {
+			$args = $args->url;
 		}
 
-		if(is_string($args)){
+		if (is_string($args)) {
 			return md5($args);
 		}
-
 
 		throw new \Exception('Expected string, or object: {"url":<string>}');
 
 	}
-	
+
 }
