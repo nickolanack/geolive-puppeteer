@@ -13,4 +13,4 @@ if (count($segments) !== 2) {
 $name=array_shift($segments);
 $id=array_shift($segments);
 
-$this->getPlugin()->getImage($name, $id);
+echo $this->getPlugin()->getImage($name, $id);
