@@ -20,7 +20,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget{
 		}
 
 		$out=$outdir.'/'.$hash.'.png';
-		if(file_exists($out){
+		if(file_exists($out)){
 			return $out;
 		}
 
