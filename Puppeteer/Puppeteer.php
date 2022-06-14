@@ -38,7 +38,7 @@ class Puppeteer extends \core\extensions\Plugin implements
 		$hash=$widget->getHash($args);
 		if($widget->exists($hash)){
 			return array(
-				'id'=>$hash
+				'id'=>$hash,
 				'url'=>HTMLDocument()->website().'/screen/'.$name.'/'.$hash
 			); //expose hash as id
 		}
