@@ -20,7 +20,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 			"out" => $this->getImagePath($hash),
 		)));
 
-		$this->info('puppeteer', $cmg);
+		$this->info('puppeteer', $cmd);
 
 		echo shell_exec($cmd);
 
