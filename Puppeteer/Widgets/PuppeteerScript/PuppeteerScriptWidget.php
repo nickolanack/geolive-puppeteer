@@ -15,10 +15,14 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$dir = getcwd();
 		chdir(__DIR__);
 
-		echo shell_exec('node test.js ' . escapeshellarg(json_encode(array(
+		$cmd='node test.js ' . escapeshellarg(json_encode(array(
 			"url" => $args->url,
 			"out" => $this->getImagePath($hash),
-		))));
+		)));
+
+		$this->info('puppeteer', $cmg);
+
+		echo shell_exec($cmd);
 
 		chdir($dir);
 
