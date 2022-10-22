@@ -15,7 +15,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$dir = getcwd();
 		chdir(__DIR__);
 
-		$cmd='echo '.escapeshellarg($this->getParameter('puppeteerScript')).' | xargs -I {} node -e "{}" index.js ' . escapeshellarg(json_encode(array(
+		$cmd = 'node -e  ' . escapeshellarg($this->getParameter('puppeteerScript')) . ' ' . escapeshellarg(json_encode(array(
 			"url" => $args->url,
 			"out" => $this->getImagePath($hash),
 		)));
@@ -41,7 +41,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 			return true;
 		}
 
-		if (time() - filectime($file) > 2*60) {
+		if (time() - filectime($file) > 2 * 60) {
 			$lastFile = dirname($file) . '/_' . basename($file);
 			if (file_exists($lastFile)) {
 				unlink($lastFile);
