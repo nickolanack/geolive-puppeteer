@@ -16,7 +16,7 @@
 	{
         "type": "input.script",
         "name": "puppeteerScript",
-        "default": "",
+        "default": "conosole.log(\"hello world\")",
         "label": "puppeteerScript"
     }
 ]
