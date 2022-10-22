@@ -15,7 +15,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$dir = getcwd();
 		chdir(__DIR__);
 
-		$cmd='node test.js ' . escapeshellarg(json_encode(array(
+		$cmd='echo '.escapeshellarg($this->getParameter('puppeteerScript')).' | node ' . escapeshellarg(json_encode(array(
 			"url" => $args->url,
 			"out" => $this->getImagePath($hash),
 		)));
