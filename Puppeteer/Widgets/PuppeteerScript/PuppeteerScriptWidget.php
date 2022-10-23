@@ -32,10 +32,10 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		
 		chdir($dir);
 
-		$lastLine=explode("\n", trim($output));
-		$lastLine=array_pop($lastLine);
+		$lastLineParts=explode("\n", trim($output));
+		$lastLine=array_pop($lastLineParts);
 
-		$this->info('puppeteer', $lastLine);
+		$this->info('puppeteer', $lastLine, $lastLineParts);
 
 		return json_decode($lastLine);
 	}
