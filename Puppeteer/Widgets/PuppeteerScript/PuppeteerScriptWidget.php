@@ -27,6 +27,9 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$this->info('puppeteer', $output);
 
 
+		echo $output;
+
+
 		chdir($dir);
 
 		return $hash;
