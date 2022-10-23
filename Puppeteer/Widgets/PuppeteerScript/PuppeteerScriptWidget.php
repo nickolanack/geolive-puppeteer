@@ -7,6 +7,39 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 
 	public function runScript($args) {
 
+		if($this->getParameter('outputImageHash')){
+
+			return $this->runImageHashScript($args);
+		}
+
+
+
+
+
+		$dir = getcwd();
+		chdir(__DIR__);
+
+		$cmd = 'node -e  ' . escapeshellarg($this->getParameter('puppeteerScript')) . ' index.js ' . escapeshellarg(json_encode(array(
+			"url" => $args->url
+		))).' 2>&1';
+
+		$this->info('puppeteer', $cmd);
+
+		$output = shell_exec($cmd);
+
+		$this->info('puppeteer', $output);
+
+		echo $output;
+		chdir($dir);
+
+		$lastLine=explode("\n", $output);
+		$lastLine=array_pop($lastLine);
+
+		return json_decode($lastLine);
+	}
+
+	public function runImageHashScript($args) {
+
 		$hash = $this->getHash($args);
 		if ($this->exists($hash)) {
 			return $hash;
