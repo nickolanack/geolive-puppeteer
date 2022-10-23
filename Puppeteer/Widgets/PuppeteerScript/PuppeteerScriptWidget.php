@@ -18,7 +18,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$cmd = 'node -e  ' . escapeshellarg($this->getParameter('puppeteerScript')) . ' ' . escapeshellarg(json_encode(array(
 			"url" => $args->url,
 			"out" => $this->getImagePath($hash),
-		)));
+		))).' 2>&1';
 
 		$this->info('puppeteer', $cmd);
 
