@@ -22,7 +22,10 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 
 		$this->info('puppeteer', $cmd);
 
-		echo system($cmd);
+		$output = shell_exec($cmd);
+
+		$this->info('puppeteer', $output);
+
 
 		chdir($dir);
 
