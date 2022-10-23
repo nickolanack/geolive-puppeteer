@@ -35,7 +35,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$lastLine=explode("\n", $output);
 		$lastLine=array_pop($lastLine);
 
-		$this->info('puppeteer', json_decode($lastLine));
+		$this->info('puppeteer', $lastLine);
 
 		return json_decode($lastLine);
 	}
