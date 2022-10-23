@@ -1,4 +1,4 @@
 <?php
 
 
-echo $this->runScript(json_decode(UrlVar('json')));
+echo json_encode($this->runScript(json_decode(UrlVar('json'))), JSON_PRETTY_PRINT);
