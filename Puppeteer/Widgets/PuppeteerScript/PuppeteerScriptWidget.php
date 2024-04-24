@@ -1,13 +1,19 @@
 <?php
 
-class PuppeteerScriptWidget extends \core\extensions\Widget {
+class PuppeteerScriptWidget extends \core\extensions\Widget
+{
 
 	use \core\extensions\plugin\PluginMemberTrait;
 	protected $description = "Create a script for Puppeteer";
 
-	public function runScript($args) {
+	public function runScript($args)
+	{
 
-		if($this->getParameter('outputImageHash')){
+		if (is_array($args)) {
+			$args = (object) $args;
+		}
+
+		if ($this->getParameter('outputImageHash')) {
 
 			return $this->runImageHashScript($args);
 		}
@@ -21,7 +27,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 
 		$cmd = 'node -e  ' . escapeshellarg($this->getParameter('puppeteerScript')) . ' index.js ' . escapeshellarg(json_encode(array(
 			"url" => $args->url
-		))).' 2>&1';
+		))) . ' 2>&1';
 
 		$this->info('puppeteer', $cmd);
 
@@ -29,18 +35,19 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 
 		$this->info('puppeteer', $output);
 
-		
+
 		chdir($dir);
 
-		$lastLineParts=explode("\n", trim($output));
-		$lastLine=array_pop($lastLineParts);
+		$lastLineParts = explode("\n", trim($output));
+		$lastLine = array_pop($lastLineParts);
 
 		$this->info('puppeteer', $lastLine);
 
 		return json_decode($lastLine);
 	}
 
-	public function runImageHashScript($args) {
+	public function runImageHashScript($args)
+	{
 
 		$hash = $this->getHash($args);
 		if ($this->exists($hash)) {
@@ -53,7 +60,7 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		$cmd = 'node -e  ' . escapeshellarg($this->getParameter('puppeteerScript')) . ' index.js ' . escapeshellarg(json_encode(array(
 			"url" => $args->url,
 			"out" => $this->getImagePath($hash),
-		))).' 2>&1';
+		))) . ' 2>&1';
 
 		$this->info('puppeteer', $cmd);
 
@@ -70,7 +77,8 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		return $hash;
 	}
 
-	public function exists($hash) {
+	public function exists($hash)
+	{
 
 		$file = $this->getImagePath($hash);
 
@@ -92,10 +100,10 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		}
 
 		return true;
-
 	}
 
-	public function getImagePath($hash) {
+	public function getImagePath($hash)
+	{
 
 		$outdir = GetPath("{front}/../puppeteer/{domain}/");
 		if (!file_exists($outdir)) {
@@ -106,10 +114,10 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 
 		$out = $outdir . '/' . $hash . '.png';
 		return $out;
-
 	}
 
-	public function getHash($args) {
+	public function getHash($args)
+	{
 
 		if (is_array($args)) {
 			$args = (object) $args;
@@ -124,7 +132,5 @@ class PuppeteerScriptWidget extends \core\extensions\Widget {
 		}
 
 		throw new \Exception('Expected string, or object: {"url":<string>}');
-
 	}
-
 }
